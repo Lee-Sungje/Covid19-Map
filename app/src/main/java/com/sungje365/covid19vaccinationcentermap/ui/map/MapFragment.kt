@@ -88,7 +88,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         centers.observe(this, Observer {
             for (center in it) {
                 Marker().apply {
-//                    map = naverMap
                     position = LatLng(center.lat.toDouble(), center.lng.toDouble())
                     icon = MarkerIcons.BLACK
                     iconTintColor = when (center.centerType) {
@@ -98,11 +97,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     }
                     onClickListener = Overlay.OnClickListener {
                         AlertDialog.Builder(context).apply {
-                            setTitle(center.facilityName)
+                            setTitle(center.centerName)
                             setMessage(
-                                "접종센터: ${center.centerName}" +
-                                        "주소: ${center.address}\n" +
-                                        "우편번호: ${center.zipCode}" +
+                                "주소: ${center.address} ${center.facilityName}\n" +
+                                        "우편번호: ${center.zipCode}\n" +
                                         "연락처: ${center.phoneNumber}\n"
                             )
                             setPositiveButton("OK") { _, _ -> }
@@ -110,6 +108,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
                         false
                     }
+                    map = naverMap
                 }
             }
         })
